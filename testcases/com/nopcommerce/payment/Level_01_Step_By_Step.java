@@ -1,12 +1,8 @@
 package com.nopcommerce.payment;
 
 import org.testng.annotations.Test;
-
-
-
 import org.testng.annotations.BeforeClass;
 
-import java.sql.Driver;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -74,14 +70,13 @@ public class Level_01_Step_By_Step {
 	  //click to register button
 	 driver.findElement(By.xpath("//input[@id='register-button']")).click();
 	 
-	 
 	 //verify registration complete
 	 Assert.assertTrue(driver.findElement(By.xpath("//div[text()='Your registration completed']")).isDisplayed());
 	 
 	 //click to logout page
 	 driver.findElement(By.xpath("//a[@class='ico-logout']")).click();
 	 
-	 //Verify navigate to homepage
+	 //Verify User is navigated to homepage
 	 Assert.assertEquals(driver.getCurrentUrl(), "https://demo.nopcommerce.com/");
   }
   @Test
@@ -106,10 +101,6 @@ public class Level_01_Step_By_Step {
 	  
   }
   
-  
-  
-  
-
   @AfterClass
   public void afterClass() {
 	  driver.quit();
@@ -119,5 +110,4 @@ public class Level_01_Step_By_Step {
 	  Random random= new Random();
 	  return random.nextInt(1000);
   }
-  
 }
