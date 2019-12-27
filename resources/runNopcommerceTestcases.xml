@@ -3,7 +3,7 @@
 
   <test name="Run on FIREFOX browser">
     <classes>
-      <class name="com.nopcommerce.payment.Level_01_Step_By_Step"/>
+      <class name="com.nopcommerce.payment.Level_02_AbstractPage_01"/>
     </classes>
   </test> 
   

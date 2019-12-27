@@ -22,6 +22,11 @@ public class Level_01_Step_By_Step {
 
   @BeforeClass
   public void beforeClass() {
+	  String rootFolder= System.getProperty("user.dir");
+	  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver 0.25.exe");
+	  System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE, "true");
+	  System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, rootFolder + "\\FirefoxLogs.txt");
+	  
 	  email= "Burner"+ randomNumber()+"@gmail.com";
 	  driver= new FirefoxDriver();
 	  driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
