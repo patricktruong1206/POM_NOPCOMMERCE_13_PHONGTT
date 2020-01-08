@@ -8,7 +8,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -23,8 +22,8 @@ public class AbstractPage {
 	List<WebElement>elements;
 	Actions action;
 	By by;
-	long shortTimeout= 5;
-	long longTimeout= 30;
+	long shortTimeout= 5000;
+	long longTimeout= 30000;
 	
 	public AbstractPage(WebDriver driverLocal) {
 		driverGlobal = driverLocal;
@@ -102,7 +101,7 @@ public class AbstractPage {
 		select.selectByVisibleText(valueItem);
 	}
 	
-	public String getValueItemInDropDơn(String locator) {
+	public String getValueItemInDropDown(String locator) {
 		element = driverGlobal.findElement(By.xpath(locator));
 		select = new Select(element);
 		return select.getFirstSelectedOption().getText();
@@ -269,23 +268,23 @@ public class AbstractPage {
 				}	
 	}
 	
-	public void waitToElemetnVisible(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+	public void waitToElementVisible(String locator) {
+		by = By.xpath(locator);
 		waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(by));
 	}
 	
 	public void waitToElementInvisible(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		by = By.xpath(locator);
 		waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(by));
 	}
 	
 	public void waitToElementPresence(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		by = By.xpath(locator);
 		waitExplicit.until(ExpectedConditions.presenceOfElementLocated(by));
 	}
 	
 	public void waitToElementClickable(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		by = By.xpath(locator);
 		waitExplicit.until(ExpectedConditions.elementToBeClickable(by));
 	}
 	

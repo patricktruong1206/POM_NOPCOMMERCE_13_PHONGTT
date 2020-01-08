@@ -18,9 +18,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 
 
-public class Level_02_AbstractPage_01 {
+public class Level_02_AbstractPage_02_Extends extends AbstractPage {
+	
+	public Level_02_AbstractPage_02_Extends(WebDriver driverLocal) {
+		super(driverLocal);
+	}
 	WebDriver driver;
-	AbstractPage abstractPage;
 	Select select;
 	String email;
 
@@ -35,8 +38,6 @@ public class Level_02_AbstractPage_01 {
 	  driver= new FirefoxDriver();
 	  
 	  //driver = ID
-	  
-	  abstractPage = new AbstractPage(driver);
 	  driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
 	  driver.get("https://demo.nopcommerce.com/");
 	  }
@@ -44,74 +45,74 @@ public class Level_02_AbstractPage_01 {
   @Test
   public void TC_01_Register() {
 	  //Click to register page
-	  abstractPage.clickToElement("//a[@class='ico-register']");
+	 clickToElement("//a[@class='ico-register']");
 	  
 	  //Verify register page is displayed  
-	  Assert.assertTrue(abstractPage.isElementDisplayed("//div[@class='page registration-page']"));
+	  Assert.assertTrue(isElementDisplayed("//div[@class='page registration-page']"));
 	  
 	  //click to gender radio button
-	  abstractPage.clickToElement("//input[@id='gender-male']");
+	  clickToElement("//input[@id='gender-male']");
 	  
 	  //input FirstName
-	  abstractPage.sendkeyToElement("//input[@id='FirstName']", "Patrick");
+	  sendkeyToElement("//input[@id='FirstName']", "Patrick");
 	  
 	  //input LastName
-	  abstractPage.sendkeyToElement("//input[@id='LastName']", "Patrick");
+	  sendkeyToElement("//input[@id='LastName']", "Patrick");
 	  
 	  //Select date of birth drop down
-	  abstractPage.selectItemInHtmlDropdown("//select[@name='DateOfBirthDay']", "12");
+	  selectItemInHtmlDropdown("//select[@name='DateOfBirthDay']", "12");
 	  
 	  //select month
-	  abstractPage.selectItemInHtmlDropdown("//select[@name='DateOfBirthMonth']", "September");
+	  selectItemInHtmlDropdown("//select[@name='DateOfBirthMonth']", "September");
 	  
 	  
 	  //select year
-	  abstractPage.selectItemInHtmlDropdown("//select[@name='DateOfBirthYear']", "1998");
+	  selectItemInHtmlDropdown("//select[@name='DateOfBirthYear']", "1998");
 	  
 	  //input email
-	  abstractPage.sendkeyToElement("//input[@id='Email']",email);
+	  sendkeyToElement("//input[@id='Email']",email);
 	  
 	  //input company Name
-	  abstractPage.sendkeyToElement("//input[@id='Company']","Znation");
+	  sendkeyToElement("//input[@id='Company']","Znation");
 	  
 	  //input password 
-	  abstractPage.sendkeyToElement("//input[@id='Password']","admin@123");
+	  sendkeyToElement("//input[@id='Password']","admin@123");
 	  
 	  
 	  //input confirm password 
-	  abstractPage.sendkeyToElement("//input[@id='ConfirmPassword']","admin@123");
+	  sendkeyToElement("//input[@id='ConfirmPassword']","admin@123");
 	  
 	  //click to register button
-	  abstractPage.clickToElement("//input[@id='register-button']");
+	  clickToElement("//input[@id='register-button']");
 	 
 	 
 	 //verify registration complete
-	 Assert.assertTrue(abstractPage.isElementDisplayed("//div[text()='Your registration completed']"));
+	 Assert.assertTrue(isElementDisplayed("//div[text()='Your registration completed']"));
 	 //click to logout page
-	  abstractPage.clickToElement("//a[@class='ico-logout']");
+	 clickToElement("//a[@class='ico-logout']");
 	 
 	 //Verify User is navigated to homepage
-	 Assert.assertEquals(abstractPage.getPageURL(), "https://demo.nopcommerce.com/");
+	 Assert.assertEquals(getPageURL(), "https://demo.nopcommerce.com/");
 	
   }
   @Test
   public void TC_02_Login() {
 	  //click to login
-	  abstractPage.clickToElement("//a[@class='ico-login']");
+	  clickToElement("//a[@class='ico-login']");
 	  
 	  //Verify login page is displayed
-	  Assert.assertTrue(abstractPage.isElementDisplayed("//div[@class='page login-page']"));
+	  Assert.assertTrue(isElementDisplayed("//div[@class='page login-page']"));
 	  //input email
-	  abstractPage.sendkeyToElement("//input[@id='Email']",email);
+	  sendkeyToElement("//input[@id='Email']",email);
 	  
 	  //input password 
-	  abstractPage.sendkeyToElement("//input[@id='Password']","admin@123");
+	  sendkeyToElement("//input[@id='Password']","admin@123");
 	  
 	  //click to login button
-	  abstractPage.clickToElement("//input[@class='button-1 login-button']");
+	  clickToElement("//input[@class='button-1 login-button']");
 	  
 	  //verify my account link is displayed
-	  Assert.assertTrue(abstractPage.isElementDisplayed("//a[@class='ico-account']"));
+	  Assert.assertTrue(isElementDisplayed("//a[@class='ico-account']"));
 	  
   }
   
