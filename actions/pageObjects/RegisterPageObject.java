@@ -3,12 +3,14 @@ package pageObjects;
 import org.openqa.selenium.WebDriver;
 
 import commons.AbstractPage;
+import commons.PageGeneratorManager;
 import pageUIs.RegisterPageUI;
 
 public class RegisterPageObject extends AbstractPage {
-
+	WebDriver driverGlobal;
 	public RegisterPageObject(WebDriver driverLocal) {
 		super(driverLocal);
+		driverGlobal=driverLocal;
 	}
 
 	public void clickToMaleButton() {
@@ -57,9 +59,10 @@ public class RegisterPageObject extends AbstractPage {
 		
 	}
 
-	public void clickToLogout() {
+	public HomePageObject clickToLogout() {
 		waitToElementVisible(RegisterPageUI.LOGOUT_LINK);
 		clickToElement(RegisterPageUI.LOGOUT_LINK);
+		return PageGeneratorManager.getHomePage(driverGlobal);
 		
 	}
 
