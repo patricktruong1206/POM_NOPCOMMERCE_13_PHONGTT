@@ -2,6 +2,9 @@ package commons;
 
 import org.openqa.selenium.WebDriver;
 
+import pageObjects.FooterMyAccountPageObject;
+import pageObjects.FooterNewProductPageObject;
+import pageObjects.FooterSearchPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.RegisterPageObject;
@@ -19,4 +22,17 @@ public class PageGeneratorManager {
 		return new HomePageObject(driver);
 	}
 	
+	public static FooterMyAccountPageObject getFooterMyAccountPage(WebDriver driver) {
+		return new FooterMyAccountPageObject(driver);
+	}
+	
+	public static FooterNewProductPageObject getFooterNewProductPage(WebDriver driver) {
+		return new FooterNewProductPageObject(driver);
+	}
+	
+	public static FooterSearchPageObject getFooterSearch(WebDriver driver) {
+		return new FooterSearchPageObject(driver);
+	}
 }
+	
+	

@@ -13,6 +13,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import pageObjects.FooterMyAccountPageObject;
+import pageObjects.FooterNewProductPageObject;
+import pageObjects.FooterSearchPageObject;
+import pageObjects.HomePageObject;
+import pageUIs.AbstractPageUI;
+import pageUIs.FooterNewProductUI;
+import pageUIs.FooterSearchUI;
+import pageUIs.HomePageUI;
+
 public class AbstractPage {
 	WebDriver driverGlobal;
 	WebElement element;
@@ -320,6 +329,29 @@ public class AbstractPage {
 		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", element);
 	}
 
+	
+	public FooterMyAccountPageObject openFooterMyAccountPage(WebDriver driverGlobal) {
+		 waitToElementVisible(AbstractPageUI.FOOTER_MY_ACCOUNT_LINK);
+		 clickToElement(AbstractPageUI.FOOTER_MY_ACCOUNT_LINK);
+		return PageGeneratorManager.getFooterMyAccountPage(driverGlobal);
+	}
+
+	public FooterSearchPageObject openFooterSearchPage(WebDriver driverGlobal) {
+		
+		waitToElementVisible(AbstractPageUI.FOOTER_NEW_PRODUCT_LINK);
+		clickToElement(AbstractPageUI.FOOTER_NEW_PRODUCT_LINK);
+		return PageGeneratorManager.getFooterSearch(driverGlobal);
+	}
+	
+	public HomePageObject openHomePage(WebDriver driverGlobal) {
+		waitToElementVisible(AbstractPageUI.HOMEPAGE_LINK);
+		return PageGeneratorManager.getHomePage(driverGlobal);
+	}
+	
+	public FooterNewProductPageObject openNewProductPage(WebDriver driverGlobal) {
+		waitToElementVisible(AbstractPageUI.FOOTER_NEW_PRODUCT_LINK);
+	return PageGeneratorManager.getFooterNewProductPage(driverGlobal);
+	}
 
 }
 

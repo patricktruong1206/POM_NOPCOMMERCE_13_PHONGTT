@@ -3,23 +3,10 @@
   <test name="Run on FIREFOX">
     <parameter name="browser" value="firefox"/>
     <classes>
-      <class name="com.nopcommerce.login.Level_07_RegisterAndLogin_Factory_Pattern"/>
+      <class name="com.nopcommerce.login.Level_08_RegisterAndLogin_Action_Chain" />
     </classes>
   </test> 
-  
-    <test name="Run on CHROME">
-    <parameter name="browser" value="chrome"/>
-    <classes>
-      <class name="com.nopcommerce.login.Level_07_RegisterAndLogin_Factory_Pattern"/>
-    </classes>
-  </test> 
-  
-    <test name="Run on CHROME HEADLESS">
-    <parameter name="browser" value="headless_chrome"/>
-    <classes>
-      <class name="com.nopcommerce.login.Level_07_RegisterAndLogin_Factory_Pattern"/>
-    </classes>
-  </test> 
+
   
     
 </suite> 

@@ -17,7 +17,7 @@ public class AbstractTest {
 			  System.setProperty("webdriver.chrome.driver", rootFolder+"\\resources\\chromedriver.exe");
 			  driver= new ChromeDriver();
 		  } else if (browserName.equalsIgnoreCase("firefox")) {
-			  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver 0.25.exe");
+			  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver.exe");
 			  System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE, "true");
 			  System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, rootFolder + "\\FirefoxLogs.txt");
 			  driver= new FirefoxDriver();
@@ -28,7 +28,7 @@ public class AbstractTest {
 			  options.addArguments("window-size=1920x1080");
 			  driver= new ChromeDriver(options);
 		  } else if (browserName.equalsIgnoreCase("headless_firefox")) {
-			  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver 0.25.exe");
+			  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver.exe");
 			  FirefoxOptions options= new FirefoxOptions();
 			  options.addArguments("--headless");
 			  options.addArguments("window-size=1920x1080");
