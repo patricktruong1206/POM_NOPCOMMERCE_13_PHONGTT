@@ -2,18 +2,19 @@ package pageObjects;
 
 import org.openqa.selenium.WebDriver;
 
-import commons.AbstractPage;
+import commons.AbstractPages;
 import commons.PageGeneratorManager;
 import pageUIs.FooterNewProductUI;
 import pageUIs.FooterSearchUI;
 import pageUIs.RegisterPageUI;
 
-public class FooterSearchPageObject extends AbstractPage {
-	WebDriver driverGlobal;
-	public FooterSearchPageObject(WebDriver driverLocal) {
-		super(driverLocal);
-		driverGlobal=driverLocal;
+public class FooterSearchPageObject extends AbstractPages {
+	private WebDriver driver;
+	
+	public FooterSearchPageObject(WebDriver _driver) {
+		driver = _driver;
 	}
+
 
 
 	

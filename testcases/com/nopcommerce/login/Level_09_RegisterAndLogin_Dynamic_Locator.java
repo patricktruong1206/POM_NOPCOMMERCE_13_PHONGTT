@@ -32,7 +32,7 @@ import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 
 
-public class Level_08_RegisterAndLogin_Action_Chain extends AbstractTest{
+public class Level_09_RegisterAndLogin_Dynamic_Locator extends AbstractTest{
 	WebDriver driver;
 	Select select;
 	String email;
@@ -104,32 +104,65 @@ public class Level_08_RegisterAndLogin_Action_Chain extends AbstractTest{
   }
   
   
-  @Test
-  public void TC_03_ActionChain() {
+  @Test(description = "Only use in case less page")
+  public void TC_03_Dynamic_Less() {
 	//Homepage -> (My Account) footer
-	  myAccountPage= homePage.openFooterMyAccountPage(driver);
+	  myAccountPage= (FooterMyAccountPageObject) homePage.openFooterPageByName(driver,"My account");
 	  
 	//My account -> Search
-	  searchPage= myAccountPage.openFooterSearchPage(driver);
+	  searchPage= (FooterSearchPageObject) myAccountPage.openFooterPageByName(driver,"Search");
 	  
 	  //Search - > New product
-	  newProductPage= searchPage.openNewProductPage(driver);
+	  newProductPage= (FooterNewProductPageObject) searchPage.openFooterPageByName(driver,"New products");
 	  
 	  // New product =>  Homepage
 	  homePage= newProductPage.openHomePage(driver);
 	  
 	  //Homepage => Search
-	  searchPage = homePage.openFooterSearchPage(driver);
+	  searchPage = (FooterSearchPageObject) homePage.openFooterPageByName(driver,"Search");
 	
 	  //Search => My Account
-	  myAccountPage= searchPage.openFooterMyAccountPage(driver);
+	  myAccountPage= (FooterMyAccountPageObject) searchPage.openFooterPageByName(driver,"My account");
 	  
 	  //My Account => New products
-	  newProductPage= myAccountPage.openNewProductPage(driver);
+	  newProductPage= (FooterNewProductPageObject) myAccountPage.openFooterPageByName(driver,"New products");
 	  
 	  //New product => search
-	  searchPage= newProductPage.openFooterSearchPage(driver);
+	  searchPage= (FooterSearchPageObject) newProductPage.openFooterPageByName(driver,"Search");
+  }
+  
+  @Test(description = "Only use in case too many page")
+  public void TC_04_Dynamic_More() {
+	//New product-> (My Account) footer
+	  newProductPage.openFooterPagesByName(driver,"My account");
+	  myAccountPage=PageGeneratorManager.getFooterMyAccountPage(driver);
 	  
+	//My account -> Search
+	 myAccountPage.openFooterPagesByName(driver,"Search");
+	 searchPage= PageGeneratorManager.getFooterSearch(driver);
+	  
+	  //Search - > New product
+	   searchPage.openFooterPagesByName(driver,"New products");
+	   newProductPage= PageGeneratorManager.getFooterNewProductPage(driver);
+	  
+	  // New product =>  Homepage
+	  homePage= newProductPage.openHomePage(driver);
+	  
+	  //Homepage => Search
+	   homePage.openFooterPagesByName(driver,"Search");
+	   searchPage= PageGeneratorManager.getFooterSearch(driver);
+	
+	  //Search => My Account
+	    searchPage.openFooterPagesByName(driver,"My account");
+	    myAccountPage=PageGeneratorManager.getFooterMyAccountPage(driver);
+	  
+	  //My Account => New products
+	  myAccountPage.openFooterPagesByName(driver,"New products");
+	  newProductPage= PageGeneratorManager.getFooterNewProductPage(driver);
+	  
+	  //New product => search
+	 newProductPage.openFooterPagesByName(driver,"Search");
+	 searchPage= PageGeneratorManager.getFooterSearch(driver);
 	  
   }
   

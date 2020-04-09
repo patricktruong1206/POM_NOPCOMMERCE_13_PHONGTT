@@ -34,7 +34,7 @@ public class Level_04_RegisterAndLogin_Selenium_Page_Factory {
   @BeforeClass
   public void beforeClass() {
 	  String rootFolder= System.getProperty("user.dir");
-	  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver 0.25.exe");
+	  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver.exe");
 	  System.setProperty(FirefoxDriver.SystemProperty.DRIVER_USE_MARIONETTE, "true");
 	  System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, rootFolder + "\\FirefoxLogs.txt");
 	  

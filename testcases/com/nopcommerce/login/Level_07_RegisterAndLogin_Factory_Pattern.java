@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import browserFactory.DriverManager;
 import browserFactory.DriverManagerFactory;
-import commons.AbstractPage;
+import commons.AbstractPages;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;

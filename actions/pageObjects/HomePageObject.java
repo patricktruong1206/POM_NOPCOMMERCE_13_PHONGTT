@@ -2,39 +2,38 @@ package pageObjects;
 
 import org.openqa.selenium.WebDriver;
 
-import commons.AbstractPage;
+import commons.AbstractPages;
 import commons.PageGeneratorManager;
 import pageUIs.HomePageUI;
 
-public class HomePageObject extends AbstractPage  {
-	WebDriver driverGlobal;
-	public HomePageObject(WebDriver driverLocal) {
-		super(driverLocal);
-		driverGlobal= driverLocal;
+public class HomePageObject extends AbstractPages  {
+	private WebDriver driver;
+	
+	public HomePageObject(WebDriver _driver) {
+		driver = _driver;
 	}
 
 	public RegisterPageObject clickToRegisterLink() {
-		waitToElementVisible(HomePageUI.REGISTER_LINK);
-		clickToElement(HomePageUI.REGISTER_LINK);
-		return PageGeneratorManager.getRegisterPage(driverGlobal);
+		waitToElementVisible(driver,HomePageUI.REGISTER_LINK);
+		clickToElement(driver,HomePageUI.REGISTER_LINK);
+		return PageGeneratorManager.getRegisterPage(driver);
 		
 	}
 
 	public HomePageObject clickToLoginLink() {
-		waitToElementVisible(HomePageUI.LOGIN_LINK);
-		clickToElement(HomePageUI.LOGIN_LINK);
-		return PageGeneratorManager.getHomePage(driverGlobal);
-		
+		waitToElementVisible(driver,HomePageUI.LOGIN_LINK);
+		clickToElement(driver,HomePageUI.LOGIN_LINK);
+		return PageGeneratorManager.getHomePage(driver);
 	}
 
 	public boolean isMyAccountLinkDisplayed() {
-		waitToElementVisible(HomePageUI.ACCOUNT_LINK);
-		return isElementDisplayed(HomePageUI.ACCOUNT_LINK);
+		waitToElementVisible(driver,HomePageUI.ACCOUNT_LINK);
+		return isElementDisplayed(driver,HomePageUI.ACCOUNT_LINK);
 	}
 
 	public boolean isLogOutLinkDisplayed() {
-		waitToElementVisible(HomePageUI.LOGOUT_LINK);
-		return isElementDisplayed(HomePageUI.LOGOUT_LINK);
+		waitToElementVisible(driver,HomePageUI.LOGOUT_LINK);
+		return isElementDisplayed(driver,HomePageUI.LOGOUT_LINK);
 		
 	}
 

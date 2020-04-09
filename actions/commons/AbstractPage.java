@@ -2,6 +2,7 @@ package commons;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,15 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import pageObjects.FooterMyAccountPageObject;
-import pageObjects.FooterNewProductPageObject;
-import pageObjects.FooterSearchPageObject;
-import pageObjects.HomePageObject;
-import pageUIs.AbstractPageUI;
-import pageUIs.FooterNewProductUI;
-import pageUIs.FooterSearchUI;
-import pageUIs.HomePageUI;
-
 public class AbstractPage {
 	WebDriver driverGlobal;
 	WebElement element;
@@ -30,7 +22,7 @@ public class AbstractPage {
 	WebDriverWait waitExplicit;
 	List<WebElement>elements;
 	Actions action;
-	By by;
+	By byXpath;
 	long shortTimeout= 5000;
 	long longTimeout= 30000;
 	
@@ -45,6 +37,8 @@ public class AbstractPage {
 
 	public void openURL(String urlValue) {
 		driverGlobal.get(urlValue);
+		driverGlobal.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS );
+		driverGlobal.manage().window().maximize();
 	}
 	
 	public String getPageTitle() {
@@ -93,25 +87,61 @@ public class AbstractPage {
 		waitExplicit.until(ExpectedConditions.alertIsPresent());
 	}
 	
-	public void clickToElement(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		element.click();
+	public WebElement findElementByXpath(String locator) {
+		return driverGlobal.findElement(By.xpath(locator));
+		}
+	
+	public WebElement findElementByXpath(String locator, String ...values) {
+		locator = String.format(locator, (Object[]) values);
+		return  driverGlobal.findElement(byXpathLocator(locator));
 	}
+	
+	public List<WebElement> findElementsByXpath(String locator){
+		return driverGlobal.findElements(byXpathLocator(locator));
+	}
+	
+	public List<WebElement> findElementsByXpath(String locator, String ...values){
+		locator = String.format(locator, (Object[]) values);
+		return driverGlobal.findElements(byXpathLocator(locator));
+	}
+	
+	public By  byXpathLocator(String locator) {
+		return byXpath= By.xpath(locator);
+	}
+	
+	public By  byXpathLocator(String locator, String...values) {
+		locator = String.format(locator, (Object[]) values);
+		return byXpath= By.xpath(locator);
+	}
+	
+	public void clickToElement(String locator) {
+		findElementByXpath(locator).click();
+	}
+	
+	public void clickToElement(String locator, String ... values) {
+		findElementByXpath(locator,values).click();
+	}
+	
+	
 	
 	public void sendkeyToElement(String locator, String value) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		element.clear();
-		element.sendKeys(value);
+		findElementByXpath(locator).clear();
+		findElementByXpath(locator).sendKeys(value);
 	}
 	
+	public int countElementNumber(String locator) {
+		return findElementsByXpath(locator).size();
+	}
+	
+	
 	public void  selectItemInHtmlDropdown(String locator,String valueItem) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		element = findElementByXpath(locator);
 		select = new Select(element);
 		select.selectByVisibleText(valueItem);
 	}
 	
 	public String getValueItemInDropDown(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		element = findElementByXpath(locator);
 		select = new Select(element);
 		return select.getFirstSelectedOption().getText();
 		
@@ -120,7 +150,7 @@ public class AbstractPage {
 	public void selectItemDropdown(String parentLocator, String allItemLocator, String expectedItem) throws InterruptedException{
 		
 		
-		element= driverGlobal.findElement(By.xpath(parentLocator));
+		element= findElementByXpath(parentLocator);
 		
 		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
 		
@@ -128,7 +158,7 @@ public class AbstractPage {
 
 		waitExplicit.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemLocator)));
 		
-		elements = driverGlobal.findElements(By.xpath(allItemLocator));
+		elements = findElementsByXpath(allItemLocator);
 			
 		for (WebElement item:elements) {
 			if(item.getText().equals(expectedItem)) {
@@ -152,46 +182,42 @@ public class AbstractPage {
 	}
 	
 	public String getAttributeValue(String attributeName,String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		return element.getAttribute(attributeName);
+		return findElementByXpath(locator).getAttribute(attributeName);
 	}
 	
-	public String getTextElement(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		return element.getText();
+	public String getTextElement(String locator) {	
+		return findElementByXpath(locator).getText();
 	}
-	
-	public int countElementNumber(String locator){
-		elements= driverGlobal.findElements(By.xpath(locator));
-		return elements.size();
-		
-	}
-	
+
 	public void checkTheCheckBox(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
+		element= findElementByXpath(locator);
 		if (element.isSelected()==false) {
 			element.click();
 		}
 	}
 	public void unCheckTheCheckBox(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
+		element= findElementByXpath(locator);
 		if (element.isSelected()==true) {
 			element.click();
 		}
 	}
 	
 	public boolean isElementDisplayed(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		return element.isDisplayed();
+		return findElementByXpath(locator).isDisplayed();
 	}
 	
-	public boolean isElementSelected(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		return element.isSelected();
+	public boolean isElementDisplayed(String locator, String ...values) {
+		return findElementByXpath(locator,values).isDisplayed();
 	}
+	
+	
+	
+	public boolean isElementSelected(String locator) {
+		return findElementByXpath(locator).isSelected();
+	}
+	
 	public boolean isElementEnabled(String locator) {
-		element= driverGlobal.findElement(By.xpath(locator));
-		return element.isEnabled();
+		return findElementByXpath(locator).isEnabled();
 	}
 	
 	public void  switchToChildWindowByTitle(String title) {
@@ -234,8 +260,7 @@ public class AbstractPage {
 	}
 	
 	public void swithToFrameOrIframe(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
-		driverGlobal.switchTo().frame(element);
+		driverGlobal.switchTo().frame(findElementByXpath(locator));
 	}
 	
 	public void switchToParentPage() {
@@ -243,20 +268,20 @@ public class AbstractPage {
 	}
 	
 	public void hoverToElement(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		element = findElementByXpath(locator);
 		action.moveToElement(element).perform();
 	}
 	public void doubleClickElement(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
-		action.doubleClick().perform();
+		element = findElementByXpath(locator);
+		action.doubleClick(element).perform();
 	}
 	public void rightClickElement(String locator) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		element = findElementByXpath(locator);
 		action.contextClick().perform();
 	}
 	
 	public void sendKeyboardToElement(String locator, Keys key) {
-		element = driverGlobal.findElement(By.xpath(locator));
+		element = findElementByXpath(locator);
 		action.sendKeys(element,key).perform();
 	}
 	
@@ -278,23 +303,53 @@ public class AbstractPage {
 	}
 	
 	public void waitToElementVisible(String locator) {
-		by = By.xpath(locator);
-		waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(by));
+		byXpath = byXpathLocator(locator);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
 	}
 	
+	public void waitToElementVisible(String locator, String...values) {
+		byXpath = byXpathLocator(locator,values);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
+	}
+	
+	
 	public void waitToElementInvisible(String locator) {
-		by = By.xpath(locator);
-		waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(by));
+		byXpath = byXpathLocator(locator);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byXpath));
+	}
+	
+	public void waitToElementInvisible(String locator, String...values) {
+		byXpath = byXpathLocator(locator,values);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byXpath));
 	}
 	
 	public void waitToElementPresence(String locator) {
-		by = By.xpath(locator);
-		waitExplicit.until(ExpectedConditions.presenceOfElementLocated(by));
+		byXpath = byXpathLocator(locator);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.presenceOfElementLocated(byXpath));
+	}
+	
+	public void waitToElementPresence(String locator,String...values) {
+		byXpath = byXpathLocator(locator,values);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.presenceOfElementLocated(byXpath));
 	}
 	
 	public void waitToElementClickable(String locator) {
-		by = By.xpath(locator);
-		waitExplicit.until(ExpectedConditions.elementToBeClickable(by));
+		byXpath = byXpathLocator(locator);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.elementToBeClickable(byXpath));
+	}
+	
+	
+	public void waitToElementClickable(String locator, String...values) {
+		byXpath = byXpathLocator(locator,values);
+		waitExplicit = new WebDriverWait(driverGlobal, longTimeout);
+		waitExplicit.until(ExpectedConditions.elementToBeClickable(byXpath));
 	}
 	
 	public void highlightElement(String locator) {
@@ -328,30 +383,4 @@ public class AbstractPage {
 		element= driverGlobal.findElement(By.xpath(locator));
 		jsExecutor.executeScript("arguments[0].removeAttribute('" + attributeRemove + "');", element);
 	}
-
-	
-	public FooterMyAccountPageObject openFooterMyAccountPage(WebDriver driverGlobal) {
-		 waitToElementVisible(AbstractPageUI.FOOTER_MY_ACCOUNT_LINK);
-		 clickToElement(AbstractPageUI.FOOTER_MY_ACCOUNT_LINK);
-		return PageGeneratorManager.getFooterMyAccountPage(driverGlobal);
-	}
-
-	public FooterSearchPageObject openFooterSearchPage(WebDriver driverGlobal) {
-		
-		waitToElementVisible(AbstractPageUI.FOOTER_NEW_PRODUCT_LINK);
-		clickToElement(AbstractPageUI.FOOTER_NEW_PRODUCT_LINK);
-		return PageGeneratorManager.getFooterSearch(driverGlobal);
-	}
-	
-	public HomePageObject openHomePage(WebDriver driverGlobal) {
-		waitToElementVisible(AbstractPageUI.HOMEPAGE_LINK);
-		return PageGeneratorManager.getHomePage(driverGlobal);
-	}
-	
-	public FooterNewProductPageObject openNewProductPage(WebDriver driverGlobal) {
-		waitToElementVisible(AbstractPageUI.FOOTER_NEW_PRODUCT_LINK);
-	return PageGeneratorManager.getFooterNewProductPage(driverGlobal);
-	}
-
 }
-

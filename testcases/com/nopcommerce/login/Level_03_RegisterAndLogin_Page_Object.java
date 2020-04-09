@@ -2,7 +2,7 @@ package com.nopcommerce.login;
 
 import org.testng.annotations.Test;
 
-import commons.AbstractPage;
+import commons.AbstractPages;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.RegisterPageObject;
@@ -24,7 +24,7 @@ import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 
 
-public class Level_03_RegisterAndLogin_Page_Object {
+public class Level_03_RegisterAndLogin_Page_Object extends AbstractPages{
 	WebDriver driver;
 	Select select;
 	String email;
@@ -44,7 +44,7 @@ public class Level_03_RegisterAndLogin_Page_Object {
 	  
 	  //driver = ID
 	  driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
-	  driver.get("https://demo.nopcommerce.com/");
+	  openURL(driver,"https://demo.nopcommerce.com/");
 	  homePage = new HomePageObject(driver);
 	  }
 	

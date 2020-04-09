@@ -1,7 +1,6 @@
 package commons;
 
 import org.openqa.selenium.WebDriver;
-
 import pageObjects.FooterMyAccountPageObject;
 import pageObjects.FooterNewProductPageObject;
 import pageObjects.FooterSearchPageObject;

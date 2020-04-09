@@ -2,7 +2,7 @@ package com.nopcommerce.login;
 
 import org.testng.annotations.Test;
 
-import commons.AbstractPage;
+import commons.AbstractPages;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
