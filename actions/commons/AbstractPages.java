@@ -83,15 +83,15 @@ public class AbstractPages {
 	}
 	
 	public void waitToAlertPresence(WebDriver driver,String locator) {
-		element = driver.findElement(By.xpath(locator));
+		element = driver.findElement(byXpathLocator(locator));
 		waitExplicit.until(ExpectedConditions.alertIsPresent());
 	}
 	
 	public WebElement findElementByXpath(WebDriver driver,String locator) {
-		return driver.findElement(By.xpath(locator));
+		return driver.findElement(byXpathLocator(locator));
 		}
 	
-	public WebElement findElementByXpath(WebDriver driver,String locator, String ...values) {
+	public WebElement findElementByXpath(WebDriver driver,String locator, String...values) {
 		locator = String.format(locator, (Object[]) values);
 		return  driver.findElement(byXpathLocator(locator));
 	}
@@ -127,6 +127,21 @@ public class AbstractPages {
 	public void sendkeyToElement(WebDriver driver,String locator, String value) {
 		findElementByXpath(driver,locator).clear();
 		findElementByXpath(driver,locator).sendKeys(value);
+		try {
+			Thread.sleep(500);
+		}catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendkeyToElement(WebDriver driver,String locator, String valueToSendkey, String...values) {
+		findElementByXpath(driver,locator,values).clear();
+		findElementByXpath(driver,locator,values).sendKeys(valueToSendkey);
+		try {
+			Thread.sleep(500);
+		}catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int countElementNumber(WebDriver driver,String locator) {
@@ -188,6 +203,11 @@ public class AbstractPages {
 	public String getTextElement(WebDriver driver,String locator) {	
 		return findElementByXpath(driver,locator).getText();
 	}
+	
+	public String getTextElement(WebDriver driver,String locator,String...values) {	
+		return findElementByXpath(driver,locator,values).getText();
+	}
+
 
 	public void checkTheCheckBox(WebDriver driver,String locator) {
 		element= findElementByXpath(driver,locator);
