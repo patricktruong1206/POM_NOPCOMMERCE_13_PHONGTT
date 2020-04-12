@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -7,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -32,8 +34,7 @@ public class AbstractPages {
 	List<WebElement>elements;
 	Actions action;
 	By byXpath;
-	long shortTimeout= 5000;
-	long longTimeout= 30000;
+	Date date;
 
 	public void openURL(WebDriver driver,String urlValue) {
 		driver.get(urlValue);
@@ -223,13 +224,29 @@ public class AbstractPages {
 	}
 	
 	public boolean isElementDisplayed(WebDriver driver,String locator) {
-		return findElementByXpath(driver,locator).isDisplayed();
+		  try {
+			  element= findElementByXpath(driver,locator);
+			  return element.isDisplayed();
+		  }
+		  catch (Exception ex) {
+			  return false;
+		  }
 	}
 	
-	public boolean isElementDisplayed(WebDriver driver,String locator, String ...values) {
-		return findElementByXpath(driver,locator,values).isDisplayed();
+	public boolean isElementDisplayed(WebDriver driver,String locator, String...values) {
+		overrideGlobalTimeout(driver, GlobalConstants.SHORT_TIMEOUT);
+		  try {
+			  element= findElementByXpath(driver,locator,values);
+			  overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			  return element.isDisplayed();
+		  }
+		  catch (Exception ex) {
+			  overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			  return false;
+		  }
 	}
 	
+
 	
 	
 	public boolean isElementSelected(WebDriver driver,String locator) {
@@ -323,55 +340,149 @@ public class AbstractPages {
 	}
 	
 	public void waitToElementVisible(WebDriver driver,String locator) {
+		//byXpath = byXpathLocator(locator);
+		//waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
+		//waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
+		
+		
+		date = new Date();
 		byXpath = byXpathLocator(locator);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
-		waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
+		waitExplicit = new WebDriverWait(driver,GlobalConstants.SHORT_TIMEOUT);
+		overrideGlobalTimeout(driver, GlobalConstants.SHORT_TIMEOUT);
+		try {
+			System.out.println("Start time for wait visible = " + date.toString());
+			waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
+			
+		} catch(TimeoutException ex) {
+			ex.printStackTrace();
+			
+		}
+		System.out.println("End time for wait visible =" + new Date().toString());
+		overrideGlobalTimeout(driver,GlobalConstants.LONG_TIMEOUT);
+		
+		
+		
 	}
 	
 	public void waitToElementVisible(WebDriver driver,String locator,String...values) {
 		byXpath = byXpathLocator(locator,values);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
 	}
 	
 	
 	public void waitToElementInvisible(WebDriver driver,String locator) {
 		byXpath = byXpathLocator(locator);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byXpath));
 	}
 	
 	public void waitToElementInvisible(WebDriver driver,String locator, String...values) {
 		byXpath = byXpathLocator(locator,values);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byXpath));
 	}
 	
 	public void waitToElementPresence(WebDriver driver,String locator) {
 		byXpath = byXpathLocator(locator);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.presenceOfElementLocated(byXpath));
 	}
 	
 	public void waitToElementPresence(WebDriver driver,String locator,String...values) {
 		byXpath = byXpathLocator(locator,values);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.presenceOfElementLocated(byXpath));
 	}
 	
 	public void waitToElementClickable(WebDriver driver,String locator) {
 		byXpath = byXpathLocator(locator);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.elementToBeClickable(byXpath));
 	}
 	
 	
 	public void waitToElementClickable(WebDriver driver,String locator, String...values) {
 		byXpath = byXpathLocator(locator,values);
-		waitExplicit = new WebDriverWait(driver, longTimeout);
+		waitExplicit = new WebDriverWait(driver, GlobalConstants.LONG_TIMEOUT);
 		waitExplicit.until(ExpectedConditions.elementToBeClickable(byXpath));
 	}
 	
+	public void overrideGlobalTimeout(WebDriver driver, long timeOut) {
+		driver.manage().timeouts().implicitlyWait(timeOut, TimeUnit.SECONDS);
+	}
+	
+	public void WaitToElementInvisble(WebDriver driver, String locator) {
+		date = new Date();
+		By byLocator = By.xpath(locator);
+		waitExplicit = new WebDriverWait(driver,GlobalConstants.SHORT_TIMEOUT);
+		overrideGlobalTimeout(driver, GlobalConstants.SHORT_TIMEOUT);
+		try {
+			System.out.println("Start time for wait invisible = " + date.toString());
+			waitExplicit.until(ExpectedConditions.invisibilityOfElementLocated(byLocator));
+			
+		} catch(TimeoutException ex) {
+			ex.printStackTrace();
+			
+		}
+		System.out.println("End time for wait invisible =" + new Date().toString());
+		overrideGlobalTimeout(driver,GlobalConstants.LONG_TIMEOUT);
+		
+	}
+	
+	 public boolean isControlUndisplayed(WebDriver driver, String locator) {
+		 date= new Date();
+		 System.out.println("Start time =" + date.toString());
+		 overrideGlobalTimeout(driver, GlobalConstants.SHORT_TIMEOUT);
+		 List<WebElement> elements = driver.findElements(By.xpath(locator));
+		 
+		 if(elements.size()==0) {
+			 System.out.println("Element not in Dom");
+			 System.out.println("End time = " +new Date().toString());
+			 overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			 return true;
+		 } else if(elements.size()>0 && !elements.get(0).isDisplayed()) {
+			 System.out.println("Element in Dom but not visible");
+			 System.out.println("End time = " +new Date().toString());
+			 overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			 return true;
+		 } else {
+			 System.out.println("Element in Dom and visible");
+			 overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			 return false;
+			 }
+	 }
+	
+	 
+	 public boolean isControlUndisplayed(WebDriver driver, String locator, String...values) {
+		 date= new Date();
+		 System.out.println("Start time =" + date.toString());
+		 overrideGlobalTimeout(driver, GlobalConstants.SHORT_TIMEOUT);
+		 
+		 
+		 locator = String.format(locator, (Object[])values);
+		 List<WebElement> elements = driver.findElements(By.xpath(locator));
+		 
+		 if(elements.size()==0) {
+			 System.out.println("Element not in Dom");
+			 System.out.println("End time = " +new Date().toString());
+			 overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			 return true;
+		 } else if(elements.size()>0 && !elements.get(0).isDisplayed()) {
+			 System.out.println("Element in Dom but not visible");
+			 System.out.println("End time = " +new Date().toString());
+			 overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			 return true;
+		 } else {
+			 System.out.println("Element in Dom and visible");
+			 overrideGlobalTimeout(driver, GlobalConstants.LONG_TIMEOUT);
+			 return false;
+			 }
+	 }
+	 
+	 
+	
+	 
 	public void highlightElement(WebDriver driver,String locator) {
 		element = driver.findElement(By.xpath(locator));
 		String originalStyle = element.getAttribute("style");

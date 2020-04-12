@@ -67,4 +67,28 @@ public class RegisterPageObject extends AbstractPages {
 		
 	}
 
+	public boolean isFirstNameTextboxDisplayed() {
+		
+		waitToElementVisible(driver,"//input[@id='FirstName']");
+		return isElementDisplayed(driver,"//input[@id='FirstName']");
+		
+	}
+
+	public boolean isRequestVerifyTokenTextboxUnDisplayed() {
+		waitToElementInvisible(driver,"//input[@name='_RequestVerificationToken']");
+		return isControlUndisplayed(driver,"//input[@name='_RequestVerificationToken']");
+		
+		
+	}
+
+	public boolean isRequestVerifyTokenTextboxDisplayed() {
+		
+		return isElementDisplayed(driver,"//input[@name='_RequestVerificationToken']");
+	}
+
+	public boolean isRegisterButtonUnDisplayed() {
+		waitToElementInvisible(driver,"//input[@class='button-1 register-button']");
+		return isControlUndisplayed(driver,"//input[@class='button-1 register-button']");
+	}
+
 }
