@@ -17,5 +17,19 @@
 	<classpathentry kind="lib" path="libaries/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="lib" path="libaries/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="libaries/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/bson-3.3.0.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/extentreports-4.0.9.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/freemarker-2.3.23.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/jcommander-1.48.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/mongodb-driver-3.3.0.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/mongodb-driver-core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="libExtentVersion4/testng-6.9.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
