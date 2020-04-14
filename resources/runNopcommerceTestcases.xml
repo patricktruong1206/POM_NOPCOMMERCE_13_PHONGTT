@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Nop Commerce" parallel="false" thread-count="3">
+	   <parameter name="browser" value="firefox"/>
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter"/>
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
 		<listener class-name="commons.MethodListener"/>
-<!-- 	<listener class-name="reportConfig.ExtentReportListenerV2"/> -->		
-<!-- 	<listener class-name="reportConfig.ExtentReportListenerV3"/>-->	
 		<listener class-name="reportConfig.ExtentReportListenerV4"/>
 	</listeners>
 	
 	
   <test name="Run on FIREFOX">
     <parameter name="browser" value="firefox"/>
-    <classes>
-      <class name="com.nopcommerce.login.Level_06_RegisterAndLogin_Multi_Browser_Parallel" />
+    <classes>      
+    		<class name="com.nopcommerce.common.Common_01_RegisterToSystem"/>
+     	<class name="com.nopcommerce.login.Level_11_Register_ShareClassState"/>
     </classes>
   </test> 
 
