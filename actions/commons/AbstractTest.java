@@ -10,6 +10,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 import org.testng.Reporter;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -22,7 +25,8 @@ public class AbstractTest {
 	public WebDriver getBrowserDriver(String browserName) {
 		 String rootFolder= System.getProperty("user.dir");
 		  if(browserName.equalsIgnoreCase("chrome")) {
-			  System.setProperty("webdriver.chrome.driver", rootFolder+"\\resources\\chromedriver.exe");
+			  //System.setProperty("webdriver.chrome.driver", rootFolder+"\\resources\\chromedriver.exe");
+			  WebDriverManager.chromedriver().setup();
 			  driver= new ChromeDriver();
 		  } else if (browserName.equalsIgnoreCase("firefox")) {
 			  System.setProperty("webdriver.gecko.driver",rootFolder + "\\resources\\geckodriver.exe");
